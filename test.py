@@ -20,7 +20,7 @@ GIN_FILE_PATH = 'meta_dataset/learn/gin/setups/data_config.gin'
 gin.parse_config_file(GIN_FILE_PATH)
 # 3
 # Comment out to disable eager execution.
-tf.enable_eager_execution()
+tf.compat.v1.enable_eager_execution()
 # 4
 def iterate_dataset(dataset, n):
   if not tf.executing_eagerly():
