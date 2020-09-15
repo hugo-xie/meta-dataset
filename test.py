@@ -61,6 +61,6 @@ augmentation = [
 trans = transforms.Compose(augmentation)
 for idx, ((images, labels), source_id) in iterate_dataset(dataset_batch, 1):
     import pdb; pdb.set_trace()
-    images = Image.fromarray(np.transpose(images.numpy(), (0, 3, 1, 2)))
+    images = images.numpy()
     images = trans(images)
     print(images.shape, labels.shape)
