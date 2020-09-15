@@ -1,7 +1,7 @@
 import os 
 import json 
 ori_datadir = '/home/xieyu/dataset/ImageNet/ILSVRC2012/train'
-tar_datadir = ''
+tar_datadir = '/home/xieyu/project/meta-dataset-hugo/meta-dataset/dataset/imagenet'
 json_path = '/home/xieyu/project/meta-dataset/meta-dataset/Records/ilsvrc_2012/dataset_spec.json'
 
 with open(json_path,'r') as load_f: 
