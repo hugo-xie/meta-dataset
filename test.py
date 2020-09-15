@@ -54,7 +54,7 @@ def iterate_dataset(dataset, n):
       if idx == n:
         break
       yield idx, episode
-
+transform = moco.loader.TwoCropsTransform(trans)
 def iterate_dataset_batch(dataset, num_batches, batch_size):
     if not tf.executing_eagerly():
         iterator = dataset.make_one_shot_iterator()
@@ -72,7 +72,8 @@ def iterate_dataset_batch(dataset, num_batches, batch_size):
             if batch_count == num_batches:
                 break 
             images = to_torch_imgs(episode[0])
-            images = moco.loader.TwoCropsTransform(images)
+            
+            images = transform(images)
             batch_entry = [images[0], images[1], to_torch_labels(episode[1])]
             curr_batch.append(batch_entry)
             if len(curr_batch) == batch_size:
