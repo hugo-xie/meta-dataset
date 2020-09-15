@@ -46,4 +46,5 @@ dataset_batch = pipeline.make_one_source_batch_pipeline(
     image_size=224)
 
 for idx, ((images, labels), source_id) in iterate_dataset(dataset_batch, 1):
-  print(images.shape, labels.shape)
+    import pdb; pdb.set_trace()
+    print(images.shape, labels.shape)
