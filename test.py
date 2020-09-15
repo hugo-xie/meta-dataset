@@ -71,7 +71,7 @@ def iterate_dataset_batch(dataset, num_batches, batch_size):
         for idx, (episode, source_id) in enumerate(dataset):
             if batch_count == num_batches:
                 break 
-            images = Image.fromarray(to_torch_imgs(episode[0])[0])
+            images = Image.fromarray((to_torch_imgs(episode[0])[0]*255)..astype(np.uint8))
             images = moco.loader.TwoCropsTransform(images)
             batch_entry = [images[0], images[1], to_torch_labels(episode[1])]
             curr_batch.append(batch_entry)
