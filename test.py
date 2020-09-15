@@ -42,18 +42,7 @@ trans = transforms.Compose(augmentation)
 
 to_torch_labels = lambda a: torch.from_numpy(a.numpy()).long()
 to_torch_imgs = lambda a: torch.from_numpy(np.transpose(a.numpy(), (0, 3, 1, 2)))
-def iterate_dataset(dataset, n):
-  if not tf.executing_eagerly():
-    iterator = dataset.make_one_shot_iterator()
-    next_element = iterator.get_next()
-    with tf.Session() as sess:
-      for idx in range(n):
-        yield idx, sess.run(next_element)
-  else:
-    for idx, episode in enumerate(dataset):
-      if idx == n:
-        break
-      yield idx, episode
+
 transform = moco.loader.TwoCropsTransform(trans)
 def iterate_dataset_batch(dataset, num_batches, batch_size):
     if not tf.executing_eagerly():
@@ -62,9 +51,7 @@ def iterate_dataset_batch(dataset, num_batches, batch_size):
         with tf.Session() as sess:
             for idx in range(num_batches):
                 episode, source_id = sess.run(next_element)
-                
                 yield(to_torch_imgs(episode[0]), to_torch_labels(episode[1]))
-    
     else: 
         batch_count = 0
         k_batch = []
@@ -105,7 +92,7 @@ dataset_batch = pipeline.make_one_source_batch_pipeline(
     dataset_spec=dataset_spec, batch_size=BATCH_SIZE, split=SPLIT,
     image_size=224)
 
-for images_q, images_k, labels in iterate_dataset_batch(dataset_batch, 10000, 256):
+for i,(images_q, images_k, labels) in enumerate(iterate_dataset_batch(dataset_batch, 10000, 256)):
     # import pdb; pdb.set_trace()
     # images = images.numpy()
     # images = trans(images)
