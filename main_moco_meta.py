@@ -379,7 +379,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
     model.train()
 
     end = time.time()
-    for i, (images, _) in enumerate(iterate_dataset_batch(dataset_batch, 10000, 256)):
+    for i, (images, _) in enumerate(iterate_dataset_batch(dataset_batch, 10000, 128)):
         # measure data loading time
         data_time.update(time.time() - end)
 
