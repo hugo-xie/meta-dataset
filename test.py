@@ -12,7 +12,7 @@ from meta_dataset.data import config
 from meta_dataset.data import dataset_spec as dataset_spec_lib
 from meta_dataset.data import learning_spec
 from meta_dataset.data import pipeline
-
+import torch 
 
 BASE_PATH = '/home/xieyu/project/meta-dataset/meta-dataset/Records'
 GIN_FILE_PATH = 'meta_dataset/learn/gin/setups/data_config.gin'
@@ -47,4 +47,5 @@ dataset_batch = pipeline.make_one_source_batch_pipeline(
 
 for idx, ((images, labels), source_id) in iterate_dataset(dataset_batch, 1):
     import pdb; pdb.set_trace()
+    images = torch.from_numpy(np.transpose(images.numpy(), (0, 3, 1, 2)))
     print(images.shape, labels.shape)
