@@ -13,6 +13,7 @@ with open(json_path,'r') as load_f:
         tem_dir_ori = os.path.join(ori_datadir, subdir)
         if os.path.exists(tem_dir_ori):
             tem_dir_target = os.path.join(tar_datadir, subdir)
+            print(tem_dir_target)
             os.mkdir(tem_dir_target)
             cmd = 'ln -s {} {}'.format(tem_dir_ori, tem_dir_target)
             os.system(cmd)
