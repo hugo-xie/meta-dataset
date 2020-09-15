@@ -8,7 +8,7 @@ with open(json_path,'r') as load_f:
     load_dict = json.load(load_f)
     #print(len(set(list(load_dict['images_per_class']['TRAIN'].keys()))))
     count = 0
-    imagenet_train = list(load_dict['images_per_class']['TEST'].keys())
+    imagenet_train = list(load_dict['images_per_class']['TRAIN'].keys())
     for subdir in imagenet_train:
         tem_dir_ori = os.path.join(ori_datadir, subdir)
         if os.path.exists(tem_dir_ori):
