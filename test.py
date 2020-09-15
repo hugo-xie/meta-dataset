@@ -98,7 +98,7 @@ dataset_batch = pipeline.make_one_source_batch_pipeline(
     dataset_spec=dataset_spec, batch_size=BATCH_SIZE, split=SPLIT,
     image_size=224)
 
-for idx, (images_q, images_k, labels) in iterate_dataset_batch(dataset_batch, 1, 256):
+for images_q, images_k, labels in iterate_dataset_batch(dataset_batch, 5, 256):
     # import pdb; pdb.set_trace()
     # images = images.numpy()
     # images = trans(images)
