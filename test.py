@@ -17,6 +17,8 @@ from PIL import Image
 import torchvision.transforms as transforms
 import moco.loader
 
+dir_path = os.path.join("/home/xieyu/dataset/ImageNet/ILSVRC2012/train", "n03*")
+print(dir_path)
 BASE_PATH = '/home/xieyu/project/meta-dataset/meta-dataset/Records'
 GIN_FILE_PATH = 'meta_dataset/learn/gin/setups/data_config.gin'
 # 2
