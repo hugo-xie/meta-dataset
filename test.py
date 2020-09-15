@@ -67,20 +67,27 @@ def iterate_dataset_batch(dataset, num_batches, batch_size):
     
     else: 
         batch_count = 0
-        curr_batch = []
+        k_batch = []
+        q_batch = []
+        label_batch = []
         for idx, (episode, source_id) in enumerate(dataset):
             if batch_count == num_batches:
                 break 
             images = to_torch_imgs(episode[0]).squeeze(0)
             
             images = transform(images)
-            batch_entry = [images[0], images[1], to_torch_labels(episode[1])]
-            curr_batch.append(batch_entry)
+            #batch_entry = [images[0], images[1], to_torch_labels(episode[1])]
+            #curr_batch.append(batch_entry)
+            k_batch.append(images[0])
+            q_batch.append(images[1])
+            label_batch.append(images[2])
             if len(curr_batch) == batch_size:
-                images_q = torch.stack([k[0] for k in curr_batch])
-                images_k = torch.stack([k[1] for k in curr_batch])
-                labels = torch.stack([k[2] for k in curr_batch])
-                curr_batch = []
+                images_q = torch.stack(q_batch)
+                images_k = torch.stack(k_batch)
+                labels = torch.stack(label_batch)
+                k_batch = []
+                q_batch = []
+                label_batch = []
                 batch_count += 1
                 yield images_q, images_k, labels
 
