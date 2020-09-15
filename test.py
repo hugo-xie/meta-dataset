@@ -80,7 +80,7 @@ def iterate_dataset_batch(dataset, num_batches, batch_size):
             #curr_batch.append(batch_entry)
             k_batch.append(images[0])
             q_batch.append(images[1])
-            label_batch.append(images[2])
+            label_batch.append(to_torch_labels(episode[1]))
             if len(curr_batch) == batch_size:
                 images_q = torch.stack(q_batch)
                 images_k = torch.stack(k_batch)
