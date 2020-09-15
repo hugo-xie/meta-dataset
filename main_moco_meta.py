@@ -177,7 +177,7 @@ def iterate_dataset_batch(dataset, num_batches, batch_size):
                 q_batch = []
                 label_batch = []
                 batch_count += 1
-                yield images_q, images_k, labels
+                yield [images_q, images_k], labels
 
 SPLIT = learning_spec.Split.TRAIN
 BATCH_SIZE = 1
@@ -379,7 +379,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
     model.train()
 
     end = time.time()
-    for i, (images, _) in enumerate(train_loader):
+    for i, (images, _) in enumerate(iterate_dataset_batch(dataset_batch, 10000, 256)):
         # measure data loading time
         data_time.update(time.time() - end)
 
