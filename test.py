@@ -85,7 +85,7 @@ def iterate_dataset_batch(dataset, num_batches, batch_size):
 
 
 SPLIT = learning_spec.Split.TRAIN
-
+print(SPLIT)
 BATCH_SIZE = 1
 ADD_DATASET_OFFSET = True
 dataset_records_path = os.path.join(BASE_PATH, 'ilsvrc_2012')
