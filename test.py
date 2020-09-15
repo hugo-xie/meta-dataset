@@ -13,6 +13,8 @@ from meta_dataset.data import dataset_spec as dataset_spec_lib
 from meta_dataset.data import learning_spec
 from meta_dataset.data import pipeline
 import torch 
+from PIL import Image 
+import torchvision.transforms as transforms
 
 BASE_PATH = '/home/xieyu/project/meta-dataset/meta-dataset/Records'
 GIN_FILE_PATH = 'meta_dataset/learn/gin/setups/data_config.gin'
@@ -44,8 +46,21 @@ dataset_spec = dataset_spec_lib.load_dataset_spec(dataset_records_path)
 dataset_batch = pipeline.make_one_source_batch_pipeline(
     dataset_spec=dataset_spec, batch_size=BATCH_SIZE, split=SPLIT,
     image_size=224)
-
+normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                     std=[0.229, 0.224, 0.225])
+augmentation = [
+            transforms.RandomResizedCrop(224, scale=(0.2, 1.)),
+            transforms.RandomApply([
+                transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)  # not strengthened
+            ], p=0.8),
+            transforms.RandomGrayscale(p=0.2),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            normalize
+        ]
+trans = transforms.Compose(augmentation)
 for idx, ((images, labels), source_id) in iterate_dataset(dataset_batch, 1):
     import pdb; pdb.set_trace()
-    images = torch.from_numpy(np.transpose(images.numpy(), (0, 3, 1, 2)))
+    images = Image.fromarray(np.transpose(images.numpy(), (0, 3, 1, 2)))
+    images = trans(images)
     print(images.shape, labels.shape)
